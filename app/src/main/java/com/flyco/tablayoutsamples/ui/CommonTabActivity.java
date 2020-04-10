@@ -58,7 +58,7 @@ public class CommonTabActivity extends AppCompatActivity {
 
 
         for (int i = 0; i < mTitles.length; i++) {
-            mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
+            mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i % mIconSelectIds.length], mIconUnselectIds[i % mIconSelectIds.length]));
         }
 
         mDecorView = getWindow().getDecorView();
@@ -90,6 +90,19 @@ public class CommonTabActivity extends AppCompatActivity {
         mTabLayout_7.setTabData(mTabEntities);
         mTabLayout_8.setTabData(mTabEntities);
 
+        mTabLayout_4.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<CustomTabEntity> mTabs = new ArrayList<>();
+                for (int i = 0; i < 2; i++) {
+                    mTabs.add(new TabEntity(mTitles[i % mTitles.length], mIconSelectIds[i % mIconSelectIds.length], mIconUnselectIds[i % mIconSelectIds.length]));
+                }
+                mTabLayout_4.setTabData(mTabs);
+                mTabLayout_4.setCurrentTab(0);
+//                mTabLayout_4.notifyDataSetChanged();
+            }
+        }, 3000);
+
         mTabLayout_3.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
@@ -114,6 +127,8 @@ public class CommonTabActivity extends AppCompatActivity {
         mTabLayout_1.showDot(2);
         mTabLayout_3.showDot(1);
         mTabLayout_4.showDot(1);
+        mTabLayout_4.showMsg(0, 55);
+        mTabLayout_4.setMsgMargin(0, -10,5);
 
         //两位数
         mTabLayout_2.showMsg(0, 55);
